@@ -8,9 +8,12 @@
   const SECTION_ORDER = ['indy', 'potter', 'pirates', 'chgk'];
   const SCREEN_TO_SECTION = { 1: 'indy', 2: 'potter', 3: 'pirates', 4: 'chgk' };
   const STORAGE_KEY = 'operation38-state-v2';
-  const DEBUG_ENABLED = new URLSearchParams(window.location.search).get('debug') === '1'
+  // TODO: убрать перед продом — сейчас дебаг всегда включен для тестирования
+  const DEBUG_ENABLED = true
+    || new URLSearchParams(window.location.search).get('debug') === '1'
     || localStorage.getItem('operation38-debug') === 'true';
 
+  let debugShowAnswers = true;
   let currentScreen = 0;
   let modalCallback = null;
   let levelCompletedShown = {};
@@ -190,6 +193,12 @@
       let html = '';
       if (q.bossLabel) html += `<span class="boss-label">${q.bossLabel}</span>`;
       html += `<p class="quiz-question">${q.question.replace(/`([^`]+)`/g, '<code>$1</code>')}</p>`;
+      if (DEBUG_ENABLED && debugShowAnswers) {
+        const acceptList = q.accept?.length
+          ? `<span class="debug-accept"> · также: ${q.accept.join(', ')}</span>`
+          : '';
+        html += `<p class="debug-answer">🔧 Ответ: <strong>${escapeHtml(q.answer)}</strong>${acceptList}</p>`;
+      }
 
       if (q.type === 'choice') {
         html += '<div class="quiz-options">';
@@ -424,7 +433,10 @@
 
     cluesEl.innerHTML = '<h4>📜 Подсказки</h4><ol>' +
       CROSSWORD.words.map((w) => `<li>${w.clue}</li>`).join('') +
-      '</ol>';
+      '</ol>' +
+      (DEBUG_ENABLED && debugShowAnswers
+        ? `<div class="debug-crossword-answers"><strong>🔧 Ответы:</strong> ${CROSSWORD.words.map((w, i) => `${i + 1}. ${w.word}`).join(' · ')}</div>`
+        : '');
 
     if (state.crosswordComplete && !document.querySelector('.crossword-done-msg')) {
       const msg = document.createElement('p');
@@ -461,10 +473,12 @@
 
   function renderDebugPanel() {
     if (!DEBUG_ENABLED) return;
+    document.querySelector('.debug-panel')?.remove();
     const panel = document.createElement('aside');
     panel.className = 'debug-panel';
     panel.innerHTML = `
       <strong>Debug</strong>
+      <button class="btn btn-debug btn-small" type="button" data-action="toggle-answers">${debugShowAnswers ? 'Скрыть ответы' : 'Показать ответы'}</button>
       <button class="btn btn-debug btn-small" type="button" data-action="skip-question">Пропустить вопрос</button>
       <button class="btn btn-debug btn-small" type="button" data-action="skip-screen">Завершить экран</button>
       <button class="btn btn-debug btn-small" type="button" data-action="reset">Сбросить прогресс</button>
@@ -479,6 +493,12 @@
     `;
     document.body.appendChild(panel);
 
+    panel.querySelector('[data-action="toggle-answers"]').addEventListener('click', () => {
+      debugShowAnswers = !debugShowAnswers;
+      renderDebugPanel();
+      renderQuizzes();
+      buildCrossword();
+    });
     panel.querySelector('[data-action="skip-question"]').addEventListener('click', debugSkipQuestion);
     panel.querySelector('[data-action="skip-screen"]').addEventListener('click', debugSkipSection);
     panel.querySelector('[data-action="reset"]').addEventListener('click', resetAll);
@@ -632,6 +652,14 @@
 
   function escapeAttr(str) {
     return String(str).replace(/"/g, '&quot;');
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
 
   init();
