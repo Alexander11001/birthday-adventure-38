@@ -7,7 +7,7 @@
   const SCREENS = ['intro', 'indy', 'potter', 'pirates', 'chgk', 'final'];
   const SECTION_ORDER = ['indy', 'potter', 'pirates', 'chgk'];
   const SCREEN_TO_SECTION = { 1: 'indy', 2: 'potter', 3: 'pirates', 4: 'chgk' };
-  const STORAGE_KEY = 'operation38-state-v4';
+  const STORAGE_KEY = 'operation38-state-v5';
   // Временно для проверки: дебаг всегда включён. Перед финальной раздачей оставить только ?debug=1 / localStorage.
   const DEBUG_ENABLED = true
     || new URLSearchParams(window.location.search).get('debug') === '1'
@@ -73,7 +73,7 @@
 
     const subtitle = document.getElementById('intro-subtitle');
     if (subtitle) {
-      subtitle.innerHTML = `Секретная миссия для <strong>${name}</strong> aka <strong>${alias}</strong><br><span class="highlight">(торт в конце, и это уже серьезный аргумент)</span>`;
+      subtitle.innerHTML = `Эй, <strong>${alias}</strong>!<br>Секретная миссия специально для тебя<br><span class="highlight">(торт в конце, и это уже серьезный аргумент)</span>`;
     }
 
     const finalTitle = document.getElementById('final-title');
@@ -86,7 +86,7 @@
         Артефакт найден, проклятие снято, ром почти не пострадал.<br>
         ${age} — достаточно взрослый, чтобы знать последствия, и достаточно молодой, чтобы всё равно полезть в пещеру.<br>
         С днём рождения, ${name}! Пусть впереди будет больше приключений, верных людей рядом и историй, которые потом приятно рассказывать — хотя некоторые лучше не при детях.<br>
-        <span class="final-alias">P.S. Диего бы одобрил эту экспедицию.</span>
+        <span class="final-alias">А ${alias} пусть тоже отметит — экспедиция удалась.</span>
       `;
     }
   }
