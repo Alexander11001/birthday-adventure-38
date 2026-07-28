@@ -7,8 +7,8 @@
   const SCREENS = ['intro', 'indy', 'potter', 'pirates', 'chgk', 'final'];
   const SECTION_ORDER = ['indy', 'potter', 'pirates', 'chgk'];
   const SCREEN_TO_SECTION = { 1: 'indy', 2: 'potter', 3: 'pirates', 4: 'chgk' };
-  const STORAGE_KEY = 'operation38-state-v3';
-  // TODO: убрать перед продом — сейчас дебаг всегда включен для тестирования
+  const STORAGE_KEY = 'operation38-state-v4';
+  // Временно для проверки: дебаг всегда включён. Перед финальной раздачей оставить только ?debug=1 / localStorage.
   const DEBUG_ENABLED = true
     || new URLSearchParams(window.location.search).get('debug') === '1'
     || localStorage.getItem('operation38-debug') === 'true';
@@ -66,6 +66,29 @@
   function hydrateBirthdayText() {
     const ageDisplay = document.getElementById('age-display');
     if (ageDisplay) ageDisplay.textContent = String(BIRTHDAY_PERSON.age);
+
+    const name = BIRTHDAY_PERSON.name;
+    const alias = BIRTHDAY_PERSON.alias;
+    const age = BIRTHDAY_PERSON.age;
+
+    const subtitle = document.getElementById('intro-subtitle');
+    if (subtitle) {
+      subtitle.innerHTML = `Секретная миссия для <strong>${name}</strong> aka <strong>${alias}</strong><br><span class="highlight">(торт в конце, и это уже серьезный аргумент)</span>`;
+    }
+
+    const finalTitle = document.getElementById('final-title');
+    if (finalTitle) finalTitle.textContent = `С ДНЁМ РОЖДЕНИЯ, ${name.toUpperCase()}!`;
+
+    const finalMessage = document.getElementById('final-message');
+    if (finalMessage) {
+      finalMessage.innerHTML = `
+        <strong>Операция завершена.</strong><br>
+        Артефакт найден, проклятие снято, ром почти не пострадал.<br>
+        ${age} — достаточно взрослый, чтобы знать последствия, и достаточно молодой, чтобы всё равно полезть в пещеру.<br>
+        С днём рождения, ${name}! Пусть впереди будет больше приключений, верных людей рядом и историй, которые потом приятно рассказывать — хотя некоторые лучше не при детях.<br>
+        <span class="final-alias">P.S. Диего бы одобрил эту экспедицию.</span>
+      `;
+    }
   }
 
   function bindEvents() {
@@ -430,8 +453,9 @@
       }
     });
 
-    grid.style.gridTemplateColumns = `repeat(${cols}, 38px)`;
-    grid.style.gridTemplateRows = `repeat(${rows}, 38px)`;
+    const cellSize = cols > 6 ? 34 : 38;
+    grid.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}px)`;
+    grid.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
