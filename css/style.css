@@ -307,6 +307,19 @@ body {
   font-weight: 800;
 }
 
+.btn-debug {
+  background: rgba(255,255,255,0.08);
+  color: var(--paper);
+  border: 1px dashed rgba(245,200,66,0.45);
+  box-shadow: none;
+}
+
+.btn-debug:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  background: rgba(245,200,66,0.12);
+}
+
 .btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
@@ -513,6 +526,10 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 1.5rem;
+}
+
+.debug-nav {
+  margin-top: 1rem;
 }
 
 /* ===== CROSSWORD ===== */

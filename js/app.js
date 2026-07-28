@@ -156,6 +156,18 @@
         input.addEventListener('keydown', (e) => { if (e.key === 'Enter') check(); });
       }
     });
+
+    const debugNav = document.createElement('div');
+    debugNav.className = 'screen-nav debug-nav';
+    debugNav.innerHTML = `
+      <button class="btn btn-debug skip-section-btn" type="button" data-section="${section}">
+        Debug: пропустить экран
+      </button>
+    `;
+    container.appendChild(debugNav);
+    debugNav.querySelector('.skip-section-btn').addEventListener('click', () => {
+      debugSkipSection(section);
+    });
   }
 
   function handleChoice(section, q, btn, card) {
@@ -222,6 +234,25 @@
         card.querySelector('.submit-input').disabled = false;
       }
     });
+  }
+
+  function debugSkipSection(section) {
+    const questions = QUIZ_DATA[section];
+    questions.forEach((q) => {
+      answered[section][q.id] = true;
+    });
+
+    if (section === 'potter') {
+      crosswordComplete = true;
+      if (!document.querySelector('.crossword-done-msg')) {
+        const msg = document.createElement('p');
+        msg.className = 'crossword-done-msg';
+        msg.textContent = '🛠️ Debug-режим: экран Хогвартса пропущен.';
+        document.querySelector('.crossword-wrap').appendChild(msg);
+      }
+    }
+
+    showFeedback('🛠️', 'Debug: экран пропущен.', () => tryAdvanceScreen(section), 900);
   }
 
   // --- Crossword ---
