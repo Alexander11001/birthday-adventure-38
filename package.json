@@ -1,0 +1,9 @@
+{
+  "name": "birthday-adventure-38",
+  "version": "1.0.0",
+  "description": "Birthday adventure quiz site — Indy, Tarzan, Pirates, CHGK",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "deploy": "npx wrangler pages deploy . --project-name=birthday-adventure-38"
+  }
+}

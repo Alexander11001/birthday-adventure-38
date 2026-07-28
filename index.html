@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🗺️ Операция «38 / 13» — Приключение начинается!</title>
+  <meta name="description" content="Секретная миссия: пройди испытания Инди, Тарзана и пиратов, чтобы открыть торт!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&family=Nunito:wght@400;600;800;900&family=Courier+Prime:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="particles"></div>
+  <div id="confetti-canvas"></div>
+
+  <!-- Прогресс -->
+  <nav class="progress-bar" aria-label="Прогресс приключения">
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <ol class="progress-steps" id="progress-steps">
+      <li class="active" data-step="0">🗺️ Карта</li>
+      <li data-step="1">🎩 Инди</li>
+      <li data-step="2">🌴 Тарзан</li>
+      <li data-step="3">🏴‍☠️ Пираты</li>
+      <li data-step="4">🧠 ЧГК</li>
+      <li data-step="5">🎂 Торт!</li>
+    </ol>
+  </nav>
+
+  <main id="app">
+    <!-- ЭКРАН 0: Вступление -->
+    <section class="screen active" id="screen-intro" data-theme="intro">
+      <div class="hero-wrap">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2177?w=1200&q=85" alt="Приключенцы: Инди, Тарзан и пираты" class="hero-img floaty" />
+        <div class="hero-glow"></div>
+      </div>
+      <h1 class="title-glitch" data-text="ОПЕРАЦИЯ «38 / 13»">ОПЕРАЦИЯ «38 / 13»</h1>
+      <p class="subtitle pulse">Секретная миссия для юного исследователя<br><span class="highlight">(паспорт говорит иное — проверим на финале)</span></p>
+      <div class="intro-cards">
+        <div class="intro-card slide-up" style="--delay:0.1s">
+          <span class="card-icon">🎩</span>
+          <h3>Храм Инди</h3>
+          <p>Загадки, ловушки и один капризный артефакт</p>
+        </div>
+        <div class="intro-card slide-up" style="--delay:0.25s">
+          <span class="card-icon">🦍</span>
+          <h3>Джунгли Тарзана</h3>
+          <p>Кроссворд на лианах — не упади!</p>
+        </div>
+        <div class="intro-card slide-up" style="--delay:0.4s">
+          <span class="card-icon">⚓</span>
+          <h3>Чёрная Жемчужина</h3>
+          <p>Компас к торту через семь морей</p>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-big" id="btn-start">🚀 Начать приключение!</button>
+      <p class="fine-print">* Никаких змей. Почти.</p>
+    </section>
+
+    <!-- ЭКРАН 1: Индиана -->
+    <section class="screen" id="screen-indy" data-theme="indy">
+      <div class="screen-header">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2177?w=800&q=80" alt="" class="theme-bg" />
+        <div class="theme-overlay"></div>
+        <h2>🎩 Храм Загадок Индианы</h2>
+        <p>«Шляпа — не просто аксессуар. Это крыша для мозга.»</p>
+      </div>
+      <div class="quiz-container" id="quiz-indy"></div>
+    </section>
+
+    <!-- ЭКРАН 2: Тарзан -->
+    <section class="screen" id="screen-tarzan" data-theme="tarzan">
+      <div class="screen-header">
+        <img src="https://images.unsplash.com/photo-1516026672322-bc52a86649d7?w=800&q=80" alt="" class="theme-bg" />
+        <div class="theme-overlay green"></div>
+        <h2>🌴 Джунгли Тарзана</h2>
+        <p>Кроссворд на лианах. Крик «ААААА!» — опционально.</p>
+      </div>
+      <div class="crossword-wrap">
+        <div class="crossword-grid" id="crossword-grid"></div>
+        <div class="crossword-clues" id="crossword-clues"></div>
+      </div>
+      <div class="quiz-container" id="quiz-tarzan"></div>
+    </section>
+
+    <!-- ЭКРАН 3: Пираты -->
+    <section class="screen" id="screen-pirates" data-theme="pirates">
+      <div class="screen-header">
+        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt="" class="theme-bg" />
+        <div class="theme-overlay blue"></div>
+        <h2>🏴‍☠️ Карибские Загадки</h2>
+        <p>«Почему пират — художник? Потому что он рисует карты!»</p>
+      </div>
+      <div class="ship-animation">
+        <div class="ship">⛵</div>
+        <div class="waves"></div>
+      </div>
+      <div class="quiz-container" id="quiz-pirates"></div>
+    </section>
+
+    <!-- ЭКРАН 4: ЧГК -->
+    <section class="screen" id="screen-chgk" data-theme="chgk">
+      <div class="screen-header chgk-header">
+        <div class="owl">🦉</div>
+        <h2>🧠 Раунд «Что? Где? Когда?»</h2>
+        <p>Классика для тех, кто составляет квизы лучше, чем спит</p>
+      </div>
+      <div class="quiz-container" id="quiz-chgk"></div>
+    </section>
+
+    <!-- ЭКРАН 5: Финал -->
+    <section class="screen" id="screen-final" data-theme="final">
+      <div class="treasure-chest" id="treasure-chest">
+        <div class="chest-lid">🎁</div>
+        <div class="chest-body">📦</div>
+        <div class="treasure-sparkles"></div>
+      </div>
+      <h2 class="final-title" id="final-title">С ДНЁМ РОЖДЕНИЯ!</h2>
+      <div class="age-reveal">
+        <span class="age-big" id="age-display">38</span>
+        <span class="age-label">лет мудрости</span>
+        <span class="age-plus">+</span>
+        <span class="age-small">13</span>
+        <span class="age-label">лет духа приключений</span>
+      </div>
+      <p class="final-message">
+        Ты прошёл все испытания: храм, джунгли, море и стол «знатоков».<br>
+        Официально тебе <strong>38</strong> — но внутри ты всё тот же пацан,<br>
+        который выбирает приключение вместо сна и квиз вместо скучного тоста.
+      </p>
+      <div class="final-badges">
+        <span class="badge">🏆 Мастер квизов</span>
+        <span class="badge">🎩 Почётный археолог</span>
+        <span class="badge">🦍 Король лианы</span>
+        <span class="badge">⚓ Капитан торта</span>
+      </div>
+      <button class="btn btn-gold" id="btn-replay">🔄 Пройти ещё раз (зачем?)</button>
+    </section>
+  </main>
+
+  <!-- Модалка обратной связи -->
+  <div class="modal" id="feedback-modal" aria-hidden="true">
+    <div class="modal-content" id="feedback-content">
+      <span class="modal-icon" id="feedback-icon">✅</span>
+      <p id="feedback-text">Верно!</p>
+      <button class="btn btn-small" id="feedback-close">Дальше!</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    Сделано с 🧡 для настоящего искателя приключений · Cloudflare-ready
+  </footer>
+
+  <script src="js/questions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
