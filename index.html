@@ -1,149 +1,151 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🗺️ Операция «38» — Приключение начинается!</title>
-  <meta name="description" content="Секретная миссия: пройди испытания Инди, Гарри Поттера и пиратов, чтобы открыть торт!" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&family=Nunito:wght@400;600;800;900&family=Courier+Prime:wght@700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <div id="particles"></div>
-  <div id="confetti-canvas"></div>
-
-  <nav class="progress-bar" aria-label="Прогресс приключения">
-    <div class="progress-track">
-      <div class="progress-fill" id="progress-fill"></div>
-    </div>
-    <ol class="progress-steps" id="progress-steps">
-      <li class="active" data-step="0">🗺️ Карта</li>
-      <li data-step="1">🎩 Инди</li>
-      <li data-step="2">⚡ Гарри</li>
-      <li data-step="3">🏴‍☠️ Пираты</li>
-      <li data-step="4">🧠 Квиз</li>
-      <li data-step="5">🎂 Торт!</li>
-    </ol>
-  </nav>
-
-  <main id="app">
-    <section class="screen active" id="screen-intro" data-theme="intro">
-      <div class="hero-wrap">
-        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2177?w=1200&q=85" alt="Приключенцы: Инди, Гарри и пираты" class="hero-img floaty" />
-        <div class="hero-glow"></div>
-      </div>
-      <h1 class="title-glitch" data-text="ОПЕРАЦИЯ «38»">ОПЕРАЦИЯ «38»</h1>
-      <p class="subtitle pulse">Секретная миссия для именинника<br><span class="highlight">(торт в конце — не разочаруем)</span></p>
-      <div class="intro-cards">
-        <div class="intro-card slide-up" style="--delay:0.1s">
-          <span class="card-icon">🎩</span>
-          <h3>Храм Инди</h3>
-          <p>Загадки, ловушки и шляпа, которую нельзя снимать даже в душе</p>
-        </div>
-        <div class="intro-card slide-up" style="--delay:0.25s">
-          <span class="card-icon">⚡</span>
-          <h3>Хогвартс</h3>
-          <p>Кроссворд, зелья и палочки. Обычные, волшебные.</p>
-        </div>
-        <div class="intro-card slide-up" style="--delay:0.4s">
-          <span class="card-icon">⚓</span>
-          <h3>Чёрная Жемчужина</h3>
-          <p>Ром, карты и сокровище, которое можно съесть</p>
-        </div>
-      </div>
-      <button class="btn btn-gold btn-big" id="btn-start">🚀 Начать приключение!</button>
-      <p class="fine-print">* Никаких змей. Кроме брючных. И то не обещаем.</p>
-    </section>
-
-    <section class="screen" id="screen-indy" data-theme="indy">
-      <div class="screen-header">
-        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2177?w=800&q=80" alt="" class="theme-bg" />
-        <div class="theme-overlay"></div>
-        <h2>🎩 Храм Загадок Индианы</h2>
-        <p>«Шляпа — не просто аксессуар. Это крыша для мозга. И иногда для совести.»</p>
-      </div>
-      <div class="quiz-container" id="quiz-indy"></div>
-    </section>
-
-    <section class="screen" id="screen-potter" data-theme="potter">
-      <div class="screen-header">
-        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2177?w=800&q=80" alt="" class="theme-bg" />
-        <div class="theme-overlay purple"></div>
-        <h2>⚡ Хогвартс и Загадки</h2>
-        <p>Кроссворд в библиотеке. Шёпотом. Иначе мадам Пинс придёт — и это страшнее Волан-де-Морта.</p>
-      </div>
-      <div class="crossword-wrap">
-        <div class="crossword-grid" id="crossword-grid"></div>
-        <div class="crossword-clues" id="crossword-clues"></div>
-      </div>
-      <div class="quiz-container" id="quiz-potter"></div>
-    </section>
-
-    <section class="screen" id="screen-pirates" data-theme="pirates">
-      <div class="screen-header">
-        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt="" class="theme-bg" />
-        <div class="theme-overlay blue"></div>
-        <h2>🏴‍☠️ Карибские Загадки</h2>
-        <p>«Почему пират — художник? Потому что он рисует карты! А ещё потому что у него длинная... борода.»</p>
-      </div>
-      <div class="ship-animation">
-        <div class="ship">⛵</div>
-        <div class="waves"></div>
-      </div>
-      <div class="quiz-container" id="quiz-pirates"></div>
-    </section>
-
-    <section class="screen" id="screen-chgk" data-theme="chgk">
-      <div class="screen-header chgk-header">
-        <div class="owl">🦉</div>
-        <h2>🧠 Финальный раунд знатоков</h2>
-        <p>Для тех, кто составляет квизы лучше, чем спит. И лучше, чем моет посуду.</p>
-      </div>
-      <div class="quiz-container" id="quiz-chgk"></div>
-    </section>
-
-    <section class="screen" id="screen-final" data-theme="final">
-      <div class="treasure-chest" id="treasure-chest">
-        <div class="chest-lid">🎁</div>
-        <div class="chest-body">📦</div>
-        <div class="treasure-sparkles"></div>
-      </div>
-      <h2 class="final-title" id="final-title">С ДНЁМ РОЖДЕНИЯ!</h2>
-      <div class="age-reveal">
-        <span class="age-big" id="age-display">38</span>
-        <span class="age-label">лет — и ни одна не зря (ну, почти)</span>
-      </div>
-      <p class="final-message">
-        Ты прошёл храм, Хогвартс, море и стол знатоков.<br>
-        Официально тебе <strong>38</strong> — возраст, когда уже знаешь ответ,<br>
-        но всё равно лезешь в приключения, квизы и торт вместо полезных дел.
-      </p>
-      <div class="final-badges">
-        <span class="badge">🏆 Мастер квизов</span>
-        <span class="badge">🎩 Почётный археолог</span>
-        <span class="badge">⚡ Выпускник Хогвартса</span>
-        <span class="badge">⚓ Капитан торта</span>
-      </div>
-      <button class="btn btn-gold" id="btn-replay">🔄 Пройти ещё раз (зачем?)</button>
-    </section>
-  </main>
-
-  <div class="modal" id="feedback-modal" aria-hidden="true">
-    <div class="modal-content" id="feedback-content">
-      <span class="modal-icon" id="feedback-icon">✅</span>
-      <p id="feedback-text">Верно!</p>
-      <button class="btn btn-small" id="feedback-close">Дальше!</button>
-    </div>
-  </div>
-
-  <footer class="footer">
-    Сделано с 🧡 для настоящего искателя приключений · Торт обязателен
-  </footer>
-
-  <script src="js/questions.js"></script>
-  <script src="js/app.js"></script>
-</body>
-</html>
-
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🗺️ Операция «38» — Приключение начинается!</title>
+  <meta name="description" content="Секретная миссия: пройди храм, Хогвартс, Карибы и черный ящик, чтобы добраться до торта." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&family=Nunito:wght@400;600;800;900&family=Courier+Prime:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="particles"></div>
+  <div id="confetti-canvas"></div>
+
+  <nav class="progress-bar" aria-label="Прогресс приключения">
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <ol class="progress-steps" id="progress-steps">
+      <li class="active" data-step="0">🗺️ Карта</li>
+      <li data-step="1">🎩 Храм</li>
+      <li data-step="2">⚡ Хогвартс</li>
+      <li data-step="3">🏴‍☠️ Карибы</li>
+      <li data-step="4">🧠 Ящик</li>
+      <li data-step="5">🎂 Торт!</li>
+    </ol>
+  </nav>
+
+  <main id="app">
+    <section class="screen active" id="screen-intro" data-theme="intro">
+      <div class="hero-wrap">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2177?w=1200&q=85" alt="Приключение с картой, магией и пиратами" class="hero-img floaty" />
+        <div class="hero-glow"></div>
+      </div>
+      <h1 class="title-glitch" data-text="ОПЕРАЦИЯ «38»">ОПЕРАЦИЯ «38»</h1>
+      <p class="subtitle pulse">Секретная миссия для именинника<br><span class="highlight">(торт в конце, и это уже серьезный аргумент)</span></p>
+      <div class="intro-cards">
+        <div class="intro-card slide-up" style="--delay:0.1s">
+          <span class="card-icon">🎩</span>
+          <h3>Храм</h3>
+          <p>Древности, камни и уверенность, что еще одна пещера точно ничем не закончится</p>
+        </div>
+        <div class="intro-card slide-up" style="--delay:0.25s">
+          <span class="card-icon">⚡</span>
+          <h3>Хогвартс</h3>
+          <p>Кроссворд, совы и палочки. Держать уверенно, размахивать без необходимости не рекомендуется.</p>
+        </div>
+        <div class="intro-card slide-up" style="--delay:0.4s">
+          <span class="card-icon">⚓</span>
+          <h3>Карибы</h3>
+          <p>Ром, карты и плохие решения, которые почему-то всегда звучат как отличная идея</p>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-big" id="btn-start">🚀 Начать приключение!</button>
+      <p class="fine-print">* Никаких змей. Кроме брючных. И те в квесте не участвуют.</p>
+    </section>
+
+    <section class="screen" id="screen-indy" data-theme="indy">
+      <div class="screen-header">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2177?w=800&q=80" alt="" class="theme-bg" />
+        <div class="theme-overlay"></div>
+        <h2>🎩 Храм сомнительной археологии</h2>
+        <p>Шляпа, карта и уверенность, что еще одна дверь с черепом приведет к чему-то хорошему.</p>
+      </div>
+      <div class="quiz-container" id="quiz-indy"></div>
+    </section>
+
+    <section class="screen" id="screen-potter" data-theme="potter">
+      <div class="screen-header">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2177?w=800&q=80" alt="" class="theme-bg" />
+        <div class="theme-overlay purple"></div>
+        <h2>⚡ Хогвартс для тех, кому уже можно</h2>
+        <p>Кроссворд в библиотеке. Шепотом. Иначе мадам Пинс придет, и это страшнее любого темного лорда.</p>
+      </div>
+      <div class="crossword-wrap">
+        <div class="crossword-grid" id="crossword-grid"></div>
+        <div class="crossword-clues" id="crossword-clues"></div>
+      </div>
+      <div class="quiz-container" id="quiz-potter"></div>
+    </section>
+
+    <section class="screen" id="screen-pirates" data-theme="pirates">
+      <div class="screen-header">
+        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt="" class="theme-bg" />
+        <div class="theme-overlay blue"></div>
+        <h2>🏴‍☠️ Карибы и плохие решения</h2>
+        <p>Ром не считается подсказкой. Хотя иногда помогает поверить в ответ.</p>
+      </div>
+      <div class="ship-animation">
+        <div class="ship">⛵</div>
+        <div class="waves"></div>
+      </div>
+      <div class="quiz-container" id="quiz-pirates"></div>
+    </section>
+
+    <section class="screen" id="screen-chgk" data-theme="chgk">
+      <div class="screen-header chgk-header">
+        <div class="owl">🦉</div>
+        <h2>🧠 Чёрный ящик</h2>
+        <p>Финальный раунд, где важнее приятное «а-а-а, точно», чем память на случайные даты.</p>
+      </div>
+      <div class="quiz-container" id="quiz-chgk"></div>
+    </section>
+
+    <section class="screen" id="screen-final" data-theme="final">
+      <div class="treasure-chest" id="treasure-chest">
+        <div class="chest-lid">🎁</div>
+        <div class="chest-body">📦</div>
+        <div class="treasure-sparkles"></div>
+      </div>
+      <h2 class="final-title" id="final-title">С ДНЁМ РОЖДЕНИЯ!</h2>
+      <div class="age-reveal">
+        <span class="age-big" id="age-display">38</span>
+        <span class="age-label">лет — отличный возраст для сомнительных экспедиций</span>
+      </div>
+      <p class="final-message">
+        <strong>Операция завершена.</strong><br>
+        Артефакт найден, проклятие снято, ром почти не пострадал.<br>
+        38 — достаточно взрослый, чтобы знать последствия, и достаточно молодой, чтобы все равно полезть в пещеру.<br>
+        С днем рождения! Пусть впереди будет больше приключений, верных людей рядом и историй, которые потом приятно рассказывать — хотя некоторые лучше не при детях.
+      </p>
+      <div class="final-badges">
+        <span class="badge">🎩 Археолог сомнительной квалификации</span>
+        <span class="badge">⚓ Почетный капитан плохих решений</span>
+        <span class="badge">⚡ Магистр палочки и здравого смысла</span>
+        <span class="badge">🌊 Человек, который снова вышел сухим из воды</span>
+      </div>
+      <button class="btn btn-gold" id="btn-replay">🔄 Пройти ещё раз (зачем?)</button>
+    </section>
+  </main>
+
+  <div class="modal" id="feedback-modal" aria-hidden="true">
+    <div class="modal-content" id="feedback-content">
+      <span class="modal-icon" id="feedback-icon">✅</span>
+      <p id="feedback-text">Верно!</p>
+      <button class="btn btn-small" id="feedback-close">Дальше!</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    Торт обязателен. Остальное обсуждаемо.
+  </footer>
+
+  <script src="js/questions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+
+
