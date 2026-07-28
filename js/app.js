@@ -8,12 +8,10 @@
   const SECTION_ORDER = ['indy', 'potter', 'pirates', 'chgk'];
   const SCREEN_TO_SECTION = { 1: 'indy', 2: 'potter', 3: 'pirates', 4: 'chgk' };
   const STORAGE_KEY = 'operation38-state-v5';
-  // Временно для проверки: дебаг всегда включён. Перед финальной раздачей оставить только ?debug=1 / localStorage.
-  const DEBUG_ENABLED = true
-    || new URLSearchParams(window.location.search).get('debug') === '1'
+  const DEBUG_ENABLED = new URLSearchParams(window.location.search).get('debug') === '1'
     || localStorage.getItem('operation38-debug') === 'true';
 
-  let debugShowAnswers = true;
+  let debugShowAnswers = false;
   let currentScreen = 0;
   let modalCallback = null;
   let levelCompletedShown = {};
