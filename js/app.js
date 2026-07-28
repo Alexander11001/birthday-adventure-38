@@ -1,12 +1,12 @@
 /**
- * Операция «38 / 13» — главная логика
+ * Операция «38» — главная логика
  */
 (function () {
   'use strict';
 
-  const SCREENS = ['intro', 'indy', 'tarzan', 'pirates', 'chgk', 'final'];
+  const SCREENS = ['intro', 'indy', 'potter', 'pirates', 'chgk', 'final'];
   let currentScreen = 0;
-  const answered = { indy: {}, tarzan: {}, pirates: {}, chgk: {} };
+  const answered = { indy: {}, potter: {}, pirates: {}, chgk: {} };
   let crosswordComplete = false;
 
   // --- DOM ---
@@ -92,10 +92,10 @@
     const questions = QUIZ_DATA[section];
     const allAnswered = questions.every((q) => answered[section][q.id]);
 
-    if (section === 'tarzan' && !crosswordComplete) return;
+    if (section === 'potter' && !crosswordComplete) return;
     if (!allAnswered) return;
 
-    const nextMap = { indy: 2, tarzan: 3, pirates: 4, chgk: 5 };
+    const nextMap = { indy: 2, potter: 3, pirates: 4, chgk: 5 };
     const next = nextMap[section];
     if (next !== undefined) {
       setTimeout(() => {
@@ -107,7 +107,7 @@
   // --- Quiz rendering ---
   function renderQuizzes() {
     renderQuizSection('indy', 'quiz-indy');
-    renderQuizSection('tarzan', 'quiz-tarzan');
+    renderQuizSection('potter', 'quiz-potter');
     renderQuizSection('pirates', 'quiz-pirates');
     renderQuizSection('chgk', 'quiz-chgk');
   }
@@ -123,9 +123,6 @@
       card.style.animationDelay = `${idx * 0.1}s`;
 
       let html = '';
-      if (q.chgkStyle) {
-        html += '<span class="chgk-badge">🦉 ЧГК-стиль</span>';
-      }
       html += `<p class="quiz-question">${q.question}</p>`;
       if (q.hint) html += `<p class="quiz-hint">💡 ${q.hint}</p>`;
 
@@ -303,9 +300,9 @@
       crosswordComplete = true;
       const msg = document.createElement('p');
       msg.className = 'crossword-done-msg';
-      msg.textContent = '🎉 Кроссворд решён! Лиана держит — можешь идти дальше!';
+      msg.textContent = '🎉 Кроссворд решён! Мадам Пинс не заметила — беги дальше!';
       document.querySelector('.crossword-wrap').appendChild(msg);
-      tryAdvanceScreen('tarzan');
+      tryAdvanceScreen('potter');
     }
   }
 
