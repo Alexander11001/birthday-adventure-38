@@ -7,7 +7,7 @@
   const SCREENS = ['intro', 'indy', 'potter', 'pirates', 'chgk', 'final'];
   const SECTION_ORDER = ['indy', 'potter', 'pirates', 'chgk'];
   const SCREEN_TO_SECTION = { 1: 'indy', 2: 'potter', 3: 'pirates', 4: 'chgk' };
-  const STORAGE_KEY = 'operation38-state-v2';
+  const STORAGE_KEY = 'operation38-state-v3';
   // TODO: убрать перед продом — сейчас дебаг всегда включен для тестирования
   const DEBUG_ENABLED = true
     || new URLSearchParams(window.location.search).get('debug') === '1'
@@ -250,6 +250,8 @@
     });
   }
 
+  let bossHintTimer = null;
+
   function renderQuestionMeta(section, q, card) {
     const qState = state.answered[section][q.id];
     const status = card.querySelector(`#status-${q.id}`);
@@ -268,7 +270,14 @@
     }
 
     actions.innerHTML = '';
-    if (qState.completed) return;
+    if (qState.completed) {
+      clearBossHintTimer();
+      return;
+    }
+
+    if (q.difficulty === 'boss') {
+      scheduleBossHint(section, q);
+    }
 
     if (qState.attempts >= 1 && qState.hintLevel === 0 && q.hints?.[0]) {
       const hintBtn = document.createElement('button');
@@ -291,6 +300,27 @@
       revealBtn.addEventListener('click', () => revealAnswer(section, q));
       actions.appendChild(revealBtn);
     }
+  }
+
+  function clearBossHintTimer() {
+    if (bossHintTimer) {
+      clearTimeout(bossHintTimer);
+      bossHintTimer = null;
+    }
+  }
+
+  function scheduleBossHint(section, q) {
+    clearBossHintTimer();
+    const qState = state.answered[section][q.id];
+    if (qState.completed || qState.hintLevel > 0) return;
+
+    bossHintTimer = setTimeout(() => {
+      const current = state.answered[section][q.id];
+      if (current.completed || current.hintLevel > 0) return;
+      current.hintLevel = 1;
+      saveState();
+      renderQuizSection(section, `quiz-${section}`);
+    }, 50000);
   }
 
   function handleChoice(section, q, btn, card) {
@@ -400,12 +430,18 @@
       }
     });
 
-    grid.style.gridTemplateColumns = `repeat(${cols}, 36px)`;
+    grid.style.gridTemplateColumns = `repeat(${cols}, 38px)`;
+    grid.style.gridTemplateRows = `repeat(${rows}, 38px)`;
+
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const cell = document.createElement('div');
+        cell.style.gridRow = String(r + 1);
+        cell.style.gridColumn = String(c + 1);
+
         if (!cells[r][c]) {
           cell.className = 'crossword-cell block';
+          cell.setAttribute('aria-hidden', 'true');
         } else {
           const key = `${r}:${c}`;
           cell.className = 'crossword-cell';
@@ -419,6 +455,7 @@
           input.maxLength = 1;
           input.dataset.key = key;
           input.dataset.expected = cells[r][c].letter;
+          input.setAttribute('aria-label', `Клетка ${r + 1},${c + 1}`);
           input.value = state.crosswordValues[key] || '';
           input.disabled = state.crosswordComplete;
           if (normalize(input.value) === normalize(input.dataset.expected)) {
